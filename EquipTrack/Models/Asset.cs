@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipTrack.Models;
 
-public class Asset
+public class Asset : IValidatableObject
 {
     public int Id { get; set; }
 
@@ -42,4 +42,14 @@ public class Asset
     public int CategoryId { get; set; }
 
     public Category? Category { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (WarrantyExpirationDate < PurchaseDate)
+        {
+            yield return new ValidationResult(
+                "Warranty expiration date can't be before the purchase date.",
+                new[] { nameof(WarrantyExpirationDate) });
+        }
+    }
 }
