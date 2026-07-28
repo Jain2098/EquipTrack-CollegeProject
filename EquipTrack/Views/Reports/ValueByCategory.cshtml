@@ -1,0 +1,24 @@
+﻿@model IEnumerable<EquipTrack.Controllers.CategoryValue>
+
+@{
+    ViewData["Title"] = "Total Value By Category";
+}
+
+<h1>Total Value By Category</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Total Purchase Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CategoryName</td>
+            <td>@item.TotalValue.ToString("C")</td>
+        </tr>
+    }
+    </tbody>
+</table>

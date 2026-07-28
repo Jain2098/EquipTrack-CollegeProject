@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EquipTrack.Models.Asset>
+
+@{
+    ViewData["Title"] = "Search Assets";
+}
+
+<h1>Search Assets</h1>
+<form method="get" asp-action="Search" class="row g-3 mb-3">
+    <div class="col-auto">
+        <input type="text" name="name" class="form-control" placeholder="Name contains..." value="@Context.Request.Query["name"]" />
+    </div>
+    <div class="col-auto">
+        <input type="number" name="maxPrice" class="form-control" placeholder="Max price" value="@Context.Request.Query["maxPrice"]" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Purchase Price</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Category?.Name</td>
+            <td>@item.PurchasePrice.ToString("C")</td>
+            <td>@item.Status</td>
+        </tr>
+    }
+    </tbody>
+</table>
