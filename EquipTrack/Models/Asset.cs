@@ -42,6 +42,8 @@ public class Asset : IValidatableObject
     public int CategoryId { get; set; }
 
     public Category? Category { get; set; }
+    
+    public ICollection<RecyclingRecord> RecyclingRecords { get; set; } = new List<RecyclingRecord>();
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
