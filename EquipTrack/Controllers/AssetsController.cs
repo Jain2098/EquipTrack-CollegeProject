@@ -63,6 +63,8 @@ namespace EquipTrack.Controllers
             {
                 _context.Add(asset);
                 await _context.SaveChangesAsync();
+                TempData["FlashMessage"] = "Asset created successfully.";
+                TempData["FlashType"] = "info";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", asset.CategoryId);
@@ -116,6 +118,8 @@ namespace EquipTrack.Controllers
                         throw;
                     }
                 }
+                TempData["FlashMessage"] = "Asset deleted.";
+                TempData["FlashType"] = "info";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", asset.CategoryId);
