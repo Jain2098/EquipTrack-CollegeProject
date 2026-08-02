@@ -22,6 +22,7 @@ namespace EquipTrack.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
+            ViewBag.CategoryCount = await _context.Categories.CountAsync();
             return View(await _context.Categories.ToListAsync());
         }
 
@@ -60,6 +61,8 @@ namespace EquipTrack.Controllers
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                TempData["FlashMessage"] = "Category created successfully.";
+                TempData["FlashType"] = "info";
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -146,6 +149,8 @@ namespace EquipTrack.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["FlashMessage"] = "Category deleted.";
+            TempData["FlashType"] = "info";
             return RedirectToAction(nameof(Index));
         }
 
