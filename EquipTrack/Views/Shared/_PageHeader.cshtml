@@ -1,0 +1,14 @@
+﻿@{
+    var heading = ViewData["Heading"] as string;
+    var subtitle = ViewData["Subtitle"] as string;
+}
+@if (!string.IsNullOrEmpty(heading))
+{
+    <div class="mb-4">
+        <h1>@heading</h1>
+        @if (!string.IsNullOrEmpty(subtitle))
+        {
+            <p class="text-muted">@subtitle</p>
+        }
+    </div>
+}
