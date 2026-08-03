@@ -118,7 +118,7 @@ namespace EquipTrack.Controllers
                         throw;
                     }
                 }
-                TempData["FlashMessage"] = "Asset deleted.";
+                TempData["FlashMessage"] = "Asset updated successfully.";
                 TempData["FlashType"] = "info";
                 return RedirectToAction(nameof(Index));
             }
@@ -157,6 +157,8 @@ namespace EquipTrack.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["FlashMessage"] = "Asset deleted.";
+            TempData["FlashType"] = "info";
             return RedirectToAction(nameof(Index));
         }
 
