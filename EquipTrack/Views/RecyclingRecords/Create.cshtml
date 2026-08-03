@@ -1,4 +1,4 @@
-@model EquipTrack.Models.Asset
+@model EquipTrack.Models.RecyclingRecord
 
 @{
     ViewData["Title"] = "Create";
@@ -6,60 +6,35 @@
 
 <h1>Create</h1>
 
-<h4>Asset</h4>
+<h4>RecyclingRecord</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="AssetId" class="control-label"></label>
+                <select asp-for="AssetId" class ="form-control" asp-items="ViewBag.AssetId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="SerialNumber" class="control-label"></label>
-                <input asp-for="SerialNumber" class="form-control" />
-                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                <label asp-for="DisposedOn" class="control-label"></label>
+                <input asp-for="DisposedOn" class="form-control" />
+                <span asp-validation-for="DisposedOn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
+                <label asp-for="WipeMethod" class="control-label"></label>
+                <input asp-for="WipeMethod" class="form-control" />
+                <span asp-validation-for="WipeMethod" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" class="form-control" />
-                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                <label asp-for="DisposalMethod" class="control-label"></label>
+                <input asp-for="DisposalMethod" class="form-control" />
+                <span asp-validation-for="DisposalMethod" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PurchaseDate" class="control-label"></label>
-                <input asp-for="PurchaseDate" class="form-control" />
-                <span asp-validation-for="PurchaseDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PurchasePrice" class="control-label"></label>
-                <input asp-for="PurchasePrice" class="form-control" />
-                <span asp-validation-for="PurchasePrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WarrantyExpirationDate" class="control-label"></label>
-                <input asp-for="WarrantyExpirationDate" class="form-control" />
-                <span asp-validation-for="WarrantyExpirationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CustomFieldsJson" class="control-label"></label>
-                <input asp-for="CustomFieldsJson" class="form-control" />
-                <span asp-validation-for="CustomFieldsJson" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -22,7 +22,7 @@ namespace EquipTrack.Controllers
         // GET: RecyclingRecords
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Assets.Include(a => a.Category);
+            var appDbContext = _context.RecyclingRecords.Include(r => r.Asset);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,21 +34,21 @@ namespace EquipTrack.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets
-                .Include(a => a.Category)
+            var recyclingRecord = await _context.RecyclingRecords
+                .Include(r => r.Asset)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null)
+            if (recyclingRecord == null)
             {
                 return NotFound();
             }
 
-            return View(asset);
+            return View(recyclingRecord);
         }
 
         // GET: RecyclingRecords/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["AssetId"] = new SelectList(_context.Assets, "Id", "Name");
             return View();
         }
 
@@ -57,16 +57,16 @@ namespace EquipTrack.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SerialNumber,Model,Manufacturer,PurchaseDate,PurchasePrice,WarrantyExpirationDate,Status,CustomFieldsJson,CategoryId")] Asset asset)
+        public async Task<IActionResult> Create([Bind("Id,AssetId,DisposedOn,WipeMethod,DisposalMethod,Notes")] RecyclingRecord recyclingRecord)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(asset);
+                _context.Add(recyclingRecord);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", asset.CategoryId);
-            return View(asset);
+            ViewData["AssetId"] = new SelectList(_context.Assets, "Id", "Name", recyclingRecord.AssetId);
+            return View(recyclingRecord);
         }
 
         // GET: RecyclingRecords/Edit/5
@@ -77,13 +77,13 @@ namespace EquipTrack.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets.FindAsync(id);
-            if (asset == null)
+            var recyclingRecord = await _context.RecyclingRecords.FindAsync(id);
+            if (recyclingRecord == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", asset.CategoryId);
-            return View(asset);
+            ViewData["AssetId"] = new SelectList(_context.Assets, "Id", "Name", recyclingRecord.AssetId);
+            return View(recyclingRecord);
         }
 
         // POST: RecyclingRecords/Edit/5
@@ -91,9 +91,9 @@ namespace EquipTrack.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SerialNumber,Model,Manufacturer,PurchaseDate,PurchasePrice,WarrantyExpirationDate,Status,CustomFieldsJson,CategoryId")] Asset asset)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AssetId,DisposedOn,WipeMethod,DisposalMethod,Notes")] RecyclingRecord recyclingRecord)
         {
-            if (id != asset.Id)
+            if (id != recyclingRecord.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace EquipTrack.Controllers
             {
                 try
                 {
-                    _context.Update(asset);
+                    _context.Update(recyclingRecord);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssetExists(asset.Id))
+                    if (!RecyclingRecordExists(recyclingRecord.Id))
                     {
                         return NotFound();
                     }
@@ -118,8 +118,8 @@ namespace EquipTrack.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", asset.CategoryId);
-            return View(asset);
+            ViewData["AssetId"] = new SelectList(_context.Assets, "Id", "Name", recyclingRecord.AssetId);
+            return View(recyclingRecord);
         }
 
         // GET: RecyclingRecords/Delete/5
@@ -130,15 +130,15 @@ namespace EquipTrack.Controllers
                 return NotFound();
             }
 
-            var asset = await _context.Assets
-                .Include(a => a.Category)
+            var recyclingRecord = await _context.RecyclingRecords
+                .Include(r => r.Asset)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null)
+            if (recyclingRecord == null)
             {
                 return NotFound();
             }
 
-            return View(asset);
+            return View(recyclingRecord);
         }
 
         // POST: RecyclingRecords/Delete/5
@@ -146,19 +146,19 @@ namespace EquipTrack.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var asset = await _context.Assets.FindAsync(id);
-            if (asset != null)
+            var recyclingRecord = await _context.RecyclingRecords.FindAsync(id);
+            if (recyclingRecord != null)
             {
-                _context.Assets.Remove(asset);
+                _context.RecyclingRecords.Remove(recyclingRecord);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AssetExists(int id)
+        private bool RecyclingRecordExists(int id)
         {
-            return _context.Assets.Any(e => e.Id == id);
+            return _context.RecyclingRecords.Any(e => e.Id == id);
         }
     }
 }
