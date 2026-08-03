@@ -1,8 +1,78 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model EquipTrack.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["Heading"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Active</h5>
+                <p class="card-text fs-2">@Model.ActiveCount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-secondary">
+            <div class="card-body">
+                <h5 class="card-title">Decommissioned</h5>
+                <p class="card-text fs-2">@Model.DecommissionedCount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-dark">
+            <div class="card-body">
+                <h5 class="card-title">Recycled</h5>
+                <p class="card-text fs-2">@Model.RecycledCount</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Assets by Category</h4>
+        <canvas id="categoryChart" height="200"></canvas>
+    </div>
+    <div class="col-md-6">
+        <h4>Warranties Expiring Soon</h4>
+        @if (Model.ExpiringWarranties.Any())
+        {
+            <ul class="list-group">
+                @foreach (var asset in Model.ExpiringWarranties)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>@asset.Name (@asset.Category?.Name)</span>
+                        <span>@asset.WarrantyExpirationDate.ToString("MMM d, yyyy")</span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">No warranties expiring in the next 30 days.</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const categoryLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CategoryCounts.Select(c => c.CategoryName)));
+        const categoryCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CategoryCounts.Select(c => c.Count)));
+
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'pie',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    data: categoryCounts,
+                    backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6f42c1', '#20c997']
+                }]
+            }
+        });
+    </script>
+}
