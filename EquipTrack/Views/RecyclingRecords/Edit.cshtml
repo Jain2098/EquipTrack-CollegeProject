@@ -2,50 +2,49 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewData["Heading"] = "Edit Recycling Record";
 }
 
-<h1>Edit</h1>
-
-<h4>RecyclingRecord</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="AssetId" class="control-label"></label>
-                <select asp-for="AssetId" class="form-control" asp-items="ViewBag.AssetId"></select>
-                <span asp-validation-for="AssetId" class="text-danger"></span>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label asp-for="AssetId" class="form-label"></label>
+                        <select asp-for="AssetId" class="form-select" asp-items="ViewBag.AssetId"></select>
+                        <span asp-validation-for="AssetId" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="DisposedOn" class="form-label"></label>
+                        <input asp-for="DisposedOn" class="form-control" />
+                        <span asp-validation-for="DisposedOn" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="WipeMethod" class="form-label"></label>
+                        <input asp-for="WipeMethod" class="form-control" />
+                        <span asp-validation-for="WipeMethod" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="DisposalMethod" class="form-label"></label>
+                        <input asp-for="DisposalMethod" class="form-control" />
+                        <span asp-validation-for="DisposalMethod" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Notes" class="form-label"></label>
+                        <input asp-for="Notes" class="form-control" />
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="DisposedOn" class="control-label"></label>
-                <input asp-for="DisposedOn" class="form-control" />
-                <span asp-validation-for="DisposedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WipeMethod" class="control-label"></label>
-                <input asp-for="WipeMethod" class="form-control" />
-                <span asp-validation-for="WipeMethod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DisposalMethod" class="control-label"></label>
-                <input asp-for="DisposalMethod" class="form-control" />
-                <span asp-validation-for="DisposalMethod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -2,47 +2,26 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewData["Heading"] = "Recycling Record Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>RecyclingRecord</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Asset)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Asset.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DisposedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DisposedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WipeMethod)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WipeMethod)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DisposalMethod)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DisposalMethod)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-    </dl>
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Asset)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Asset.Name)</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DisposedOn)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DisposedOn)</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.WipeMethod)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.WipeMethod)</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DisposalMethod)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DisposalMethod)</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Notes)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Notes)</dd>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to List</a>
 </div>

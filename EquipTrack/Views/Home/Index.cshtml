@@ -5,74 +5,107 @@
     ViewData["Heading"] = "Dashboard";
 }
 
-<div class="row mb-4">
+<div class="row g-3 mb-4">
     <div class="col-md-4">
-        <div class="card text-white bg-success">
+        <div class="card text-white bg-success h-100">
             <div class="card-body">
-                <h5 class="card-title">Active</h5>
-                <p class="card-text fs-2">@Model.ActiveCount</p>
+                <h6 class="card-title text-uppercase">Active</h6>
+                <p class="card-text fs-2 mb-0">@Model.ActiveCount</p>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card text-white bg-secondary">
+        <div class="card text-white bg-secondary h-100">
             <div class="card-body">
-                <h5 class="card-title">Decommissioned</h5>
-                <p class="card-text fs-2">@Model.DecommissionedCount</p>
+                <h6 class="card-title text-uppercase">Decommissioned</h6>
+                <p class="card-text fs-2 mb-0">@Model.DecommissionedCount</p>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card text-white bg-dark">
+        <div class="card text-white bg-dark h-100">
             <div class="card-body">
-                <h5 class="card-title">Recycled</h5>
-                <p class="card-text fs-2">@Model.RecycledCount</p>
+                <h6 class="card-title text-uppercase">Recycled</h6>
+                <p class="card-text fs-2 mb-0">@Model.RecycledCount</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Assets by Category</h4>
-        <canvas id="categoryChart" height="200"></canvas>
-    </div>
-    <div class="col-md-6">
-        <h4>Warranties Expiring Soon</h4>
-        @if (Model.ExpiringWarranties.Any())
-        {
-            <ul class="list-group">
-                @foreach (var asset in Model.ExpiringWarranties)
+<div class="row g-3 mb-4">
+    <div class="col-md-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Assets by Category</h5>
+                @if (Model.CategoryCounts.Any())
                 {
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>@asset.Name (@asset.Category?.Name)</span>
-                        <span>@asset.WarrantyExpirationDate.ToString("MMM d, yyyy")</span>
-                    </li>
+                    <div style="position: relative; height: 260px;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
                 }
-            </ul>
-        }
-        else
-        {
-            <p class="text-muted">No warranties expiring in the next 30 days.</p>
-        }
+                else
+                {
+                    <p class="text-muted mb-0">No assets yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Warranties Expiring Soon</h5>
+                @if (Model.ExpiringWarranties.Any())
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var asset in Model.ExpiringWarranties)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span>@asset.Name <span class="text-muted">(@asset.Category?.Name)</span></span>
+                                <span class="badge bg-warning text-dark">@asset.WarrantyExpirationDate.ToString("MMM d, yyyy")</span>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted mb-0">No warranties expiring in the next 30 days.</p>
+                }
+            </div>
+        </div>
     </div>
 </div>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const categoryLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CategoryCounts.Select(c => c.CategoryName)));
-        const categoryCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CategoryCounts.Select(c => c.Count)));
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Quick Actions</h5>
+        <a asp-controller="Assets" asp-action="Create" class="btn btn-primary btn-sm">+ New Asset</a>
+        <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary btn-sm">+ New Category</a>
+        <a asp-controller="Reports" asp-action="Index" class="btn btn-outline-secondary btn-sm">View Reports</a>
+    </div>
+</div>
 
-        new Chart(document.getElementById('categoryChart'), {
-            type: 'pie',
-            data: {
-                labels: categoryLabels,
-                datasets: [{
-                    data: categoryCounts,
-                    backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6f42c1', '#20c997']
-                }]
-            }
-        });
-    </script>
+@if (Model.CategoryCounts.Any())
+{
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const categoryLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CategoryCounts.Select(c => c.CategoryName)));
+            const categoryCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CategoryCounts.Select(c => c.Count)));
+
+            new Chart(document.getElementById('categoryChart'), {
+                type: 'pie',
+                data: {
+                    labels: categoryLabels,
+                    datasets: [{
+                        data: categoryCounts,
+                        backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6f42c1', '#20c997']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        </script>
+    }
 }

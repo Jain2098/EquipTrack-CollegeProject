@@ -1,59 +1,38 @@
 @model IEnumerable<EquipTrack.Models.RecyclingRecord>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Recycling Records";
+    ViewData["Heading"] = "Recycling Records";
 }
-
-<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary btn-sm">+ New Recycling Record</a>
 </p>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Asset)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DisposedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WipeMethod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DisposalMethod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>Asset</th>
+        <th>Disposed On</th>
+        <th>Wipe Method</th>
+        <th>Disposal Method</th>
+        <th>Notes</th>
+        <th class="text-end">Actions</th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Asset.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisposedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WipeMethod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisposalMethod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td>@item.Asset?.Name</td>
+            <td>@item.DisposedOn.ToString("MMM d, yyyy")</td>
+            <td>@item.WipeMethod</td>
+            <td>@item.DisposalMethod</td>
+            <td>@item.Notes</td>
+            <td class="text-end">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
