@@ -23,7 +23,7 @@ namespace EquipTrack.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.CategoryCount = await _context.Categories.CountAsync();
-            return View(await _context.Categories.ToListAsync());
+            return View(await _context.Categories.Include(c => c.Assets).ToListAsync());
         }
 
         // GET: Categories/Details/5

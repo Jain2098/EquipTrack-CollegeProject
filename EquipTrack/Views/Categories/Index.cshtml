@@ -20,6 +20,7 @@
     <thead>
     <tr>
         <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>Assets</th>
         <th class="text-end">Actions</th>
     </tr>
     </thead>
@@ -27,6 +28,7 @@
     @foreach (var item in Model) {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td><span class="badge bg-secondary">@item.Assets.Count</span></td>
             <td class="text-end">
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
